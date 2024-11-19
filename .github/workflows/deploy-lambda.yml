@@ -32,6 +32,6 @@ jobs:
 
     - name: Deploy to Lambda
       run: |
-        aws lambda update-function-code \
-          --function-name LinkedInJobNotifier \  # Replace with your Lambda function name
-          --zip-file fileb://main.zip
+        cd cmd  # Navigate to the correct directory
+        GOOS=linux GOARCH=amd64 go build -o main
+        zip ../main.zip main  # Package the binary into a zip at the root level
