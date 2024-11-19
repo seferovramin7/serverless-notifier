@@ -35,4 +35,4 @@ jobs:
         run: |
           aws lambda update-function-code \
             --function-name LinkedInJobNotifier \
-            --zip-file fileb://main.zip
+            --zip-file fileb://cmd/lambda/main.zip
