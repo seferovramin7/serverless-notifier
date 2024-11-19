@@ -3,7 +3,7 @@ name: Deploy to AWS Lambda
 on:
   push:
     branches:
-      - main  # Deploy on every push to the main branch
+      - master
 
 jobs:
   deploy:
