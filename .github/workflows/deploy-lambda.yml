@@ -19,7 +19,7 @@ jobs:
           go-version: '1.23.2'
 
       - name: Build Go binary
-        working-directory: ./cmd/lambda
+        working-directory: ./cmd/lambda/main
         run: |
           # Build the binary and rename it to bootstrap for Lambda custom runtime
           GOOS=linux GOARCH=amd64 go build -o bootstrap
@@ -37,4 +37,4 @@ jobs:
         run: |
           aws lambda update-function-code \
             --function-name LinkedInJobNotifier \
-            --zip-file fileb://cmd/lambda/main.zip
+            --zip-file fileb://cmd/lambda/main/main.zip
