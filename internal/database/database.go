@@ -202,7 +202,7 @@ func StoreJobIDs(jobs []fetcher.Job) error {
 							Specialities:  []interface{}{"Development", "Consulting"},
 						},
 						CompanyApplyURL: "https://example.com/apply",
-						JobPostingURL:   "https://example.com/job123455",
+						JobPostingURL:   "https://example.com/job12345455",
 						ListedAt:        time.Now(),
 					},
 				},
