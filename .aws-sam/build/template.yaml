@@ -1,0 +1,13 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  LinkedInJobNotifierFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: main
+      Runtime: go1.x
+      CodeUri: LinkedInJobNotifierFunction
+      MemorySize: 128
+      Timeout: 10
+    Metadata:
+      SamResourceId: LinkedInJobNotifierFunction

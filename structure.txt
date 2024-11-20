@@ -1,0 +1,27 @@
+.
+├── cmd
+│   └── lambda
+│       ├── main
+│       ├── main.go
+│       └── main.zip
+├── event.json
+├── go.mod
+├── go.sum
+├── internal
+│   ├── database
+│   │   └── database.go
+│   ├── fetcher
+│   │   └── fetcher.go
+│   ├── filter
+│   │   └── filter.go
+│   ├── notifier
+│   │   └── notifier.go
+│   └── pipeline
+│       └── pipeline.go
+├── pkg
+│   └── utils
+│       └── utils.go
+├── structure.txt
+└── template.yaml
+
+11 directories, 14 files
