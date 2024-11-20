@@ -2,14 +2,13 @@ package database
 
 import (
 	"context"
-	"log"
-	"time"
-
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
+	"log"
 	"serverless-notifier/internal/fetcher"
+	"time"
 )
 
 var dynamoClient *dynamodb.Client
@@ -68,7 +67,7 @@ func CheckDatabase(jobs []fetcher.Job) ([]fetcher.Job, error) {
 //}
 
 func StoreJobIDs(jobs []fetcher.Job) error {
-	// Mock data to be stored
+	// Mock data structure matching the fetcher.Job definition
 	mockJobs := []fetcher.Job{
 		{
 			Success: true,
@@ -154,20 +153,21 @@ func StoreJobIDs(jobs []fetcher.Job) error {
 				}{
 					{
 						Title:                     "Software Engineer",
-						ComapnyURL1:               "http://example1.com",
-						CompanyID:                 "1234",
-						CompanyUniversalName:      "Example",
-						CompanyName:               "ExampleName",
-						SalaryInsights:            "$100000",
-						Applicants:                30,
-						FormattedLocation:         "NY",
-						FormattedEmploymentStatus: "Full-Time",
-						FormattedExperienceLevel:  "Senior",
-						FormattedIndustries:       "Tech",
-						JobDescription:            "Build Product",
-						InferredBenefits:          "Health insurance",
-						JobFunctions:              "Engineering",
-						WorkplaceTypes:            []string{"Remote"},
+						ComapnyURL1:               "https://example.com/company1",
+						ComapnyURL2:               "https://example.com/company2",
+						CompanyID:                 "12345",
+						CompanyUniversalName:      "ExampleUniversalName",
+						CompanyName:               "Example Company",
+						SalaryInsights:            "Competitive Salary",
+						Applicants:                10,
+						FormattedLocation:         "Remote, USA",
+						FormattedEmploymentStatus: "Full-time",
+						FormattedExperienceLevel:  "Mid-Senior level",
+						FormattedIndustries:       "Software Development",
+						JobDescription:            "Develop and maintain software applications.",
+						InferredBenefits:          "Health, Dental, Vision",
+						JobFunctions:              "Engineering, Development",
+						WorkplaceTypes:            []string{"Remote", "Hybrid"},
 						CompanyData: struct {
 							Name                 string `json:"name"`
 							Logo                 string `json:"logo"`
@@ -182,19 +182,49 @@ func StoreJobIDs(jobs []fetcher.Job) error {
 							URL           string        `json:"url"`
 							Industries    []string      `json:"industries"`
 							Specialities  []interface{} `json:"specialities"`
-						}{},
+						}{
+							Name:                 "Example Company",
+							Logo:                 "https://example.com/logo.png",
+							BackgroundCoverImage: "https://example.com/cover.png",
+							Description:          "An innovative company.",
+							StaffCount:           500,
+							StaffCountRange: struct {
+								StaffCountRangeStart int `json:"staffCountRangeStart"`
+								StaffCountRangeEnd   int `json:"staffCountRangeEnd"`
+							}{
+								StaffCountRangeStart: 100,
+								StaffCountRangeEnd:   1000,
+							},
+							UniversalName: "ExampleUniversalName",
+							URL:           "https://example.com",
+							Industries:    []string{"Software", "Technology"},
+							Specialities:  []interface{}{"Development", "Consulting"},
+						},
+						CompanyApplyURL: "https://example.com/apply",
+						JobPostingURL:   "https://example.com/job12345",
+						ListedAt:        time.Now(),
 					},
+				},
+				Paging: struct {
+					Total int `json:"total"`
+					Start int `json:"start"`
+					Count int `json:"count"`
+				}{
+					Total: 1,
+					Start: 0,
+					Count: 1,
 				},
 			},
 		},
 	}
 
+	// Use the mockJobs instead of input jobs
 	for _, job := range mockJobs {
 		input := &dynamodb.PutItemInput{
 			TableName: aws.String(tableName),
 			Item: map[string]types.AttributeValue{
 				"JobID":   &types.AttributeValueMemberS{Value: job.Response.Jobs[0].JobPostingURL},
-				"JobData": &types.AttributeValueMemberS{Value: job.Response.Jobs[0].JobPostingURL},
+				"JobData": &types.AttributeValueMemberS{Value: job.Response.Jobs[0].JobPostingURL}, // Adjust this based on your Job structure
 			},
 		}
 
