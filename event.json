@@ -1,3 +1,9 @@
 {
-  "testKey": "testValue"
+  "query": "\"java\" OR \"go\"",
+  "page": 1,
+  "locationId": "92000000",
+  "sortBy": "DD",
+  "functionIds": "ENG",
+  "postedAgo": 60,
+  "experience": 4
 }

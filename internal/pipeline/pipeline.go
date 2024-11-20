@@ -7,9 +7,9 @@ import (
 	"serverless-notifier/internal/notifier"
 )
 
-func Run() error {
+func Run(query string, page int, locationID string, sortBy string, functionIDs string, postedAgo int, experience int) error {
 
-	jobs, err := fetcher.FetchJobs()
+	jobs, err := fetcher.FetchJobs(query, page, locationID, sortBy, functionIDs, postedAgo, experience)
 
 	if err != nil {
 		return err

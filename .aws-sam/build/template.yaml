@@ -6,6 +6,14 @@ Resources:
     Properties:
       Handler: main
       Runtime: go1.x
-      CodeUri: ../../cmd/lambda/main/main.zip
+      CodeUri: LinkedInJobNotifierFunction
       MemorySize: 128
       Timeout: 10
+      Events:
+        LinkedInJobNotifierApiEvent:
+          Type: Api
+          Properties:
+            Path: /notify
+            Method: POST
+    Metadata:
+      SamResourceId: LinkedInJobNotifierFunction

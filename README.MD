@@ -14,5 +14,5 @@ zip main.zip main
 ```bash
 sam build   
 
-sam local invoke LinkedInJobNotifierFunction
+sam local invoke LinkedInJobNotifierFunction --event event.json
 ```

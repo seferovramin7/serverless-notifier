@@ -5,8 +5,14 @@ Resources:
   LinkedInJobNotifierFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: main
-      Runtime: go1.x
-      CodeUri: ./cmd/lambda/main/main.zip  # Directory containing your Go binary
+      Handler: main          # Entry point of your Go program
+      Runtime: go1.x         # Specify Go runtime
+      CodeUri: ./cmd/lambda/main/  # Directory containing the Go binary
       MemorySize: 128
       Timeout: 10
+      Events:
+        LinkedInJobNotifierApiEvent:
+          Type: Api
+          Properties:
+            Path: /notify
+            Method: POST
