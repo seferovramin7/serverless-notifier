@@ -2,6 +2,7 @@ package database
 
 import (
 	"context"
+	"fmt"
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
@@ -220,11 +221,16 @@ func StoreJobIDs(jobs []fetcher.Job) error {
 
 	// Use the mockJobs instead of input jobs
 	for _, job := range mockJobs {
+		// Validate that JobPostingURL is non-empty
+		if job.Response.Jobs[0].JobPostingURL == "" {
+			return fmt.Errorf("missing JobPostingURL for job: %+v", job)
+		}
+
 		input := &dynamodb.PutItemInput{
 			TableName: aws.String(tableName),
 			Item: map[string]types.AttributeValue{
-				"JobID":   &types.AttributeValueMemberS{Value: job.Response.Jobs[0].JobPostingURL},
-				"JobData": &types.AttributeValueMemberS{Value: job.Response.Jobs[0].JobPostingURL}, // Adjust this based on your Job structure
+				"url":     &types.AttributeValueMemberS{Value: job.Response.Jobs[0].JobPostingURL},
+				"JobData": &types.AttributeValueMemberS{Value: job.Response.Jobs[0].JobDescription}, // Replace with actual JobData
 			},
 		}
 
